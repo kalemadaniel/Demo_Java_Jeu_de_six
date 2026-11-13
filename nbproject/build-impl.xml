@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Demo_Java_Jeu_de_six-impl" default="default" basedir="..">
+    <target name="init">
+        <property file="nbproject/private/private.properties"/>
+        <property file="nbproject/project.properties"/>
+        <property name="application.args" value=""/>
+        <mkdir dir="${build.classes.dir}"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}"
+               source="${javac.source}" target="${javac.target}"
+               encoding="${source.encoding}" includeantruntime="false" debug="true">
+            <classpath path="${javac.classpath}"/>
+        </javac>
+    </target>
+    <target name="compile-single" depends="compile"/>
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.jar}" basedir="${build.classes.dir}" manifest="${manifest.file}"/>
+    </target>
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath path="${run.classpath}"/>
+            <jvmarg line="${run.jvmargs}"/>
+            <arg line="${application.args}"/>
+        </java>
+    </target>
+    <target name="run-single" depends="run"/>
+    <target name="test" depends="compile">
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath path="${run.classpath}"/>
+            <arg value="--test"/>
+        </java>
+    </target>
+    <target name="debug" depends="compile">
+        <nbjpdastart addressproperty="jpda.address" name="${main.class}" transport="dt_socket">
+            <classpath path="${run.classpath}"/>
+        </nbjpdastart>
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath path="${run.classpath}"/>
+            <jvmarg value="-agentlib:jdwp=transport=dt_socket,address=${jpda.address},server=n,suspend=y"/>
+            <jvmarg line="${run.jvmargs}"/>
+            <arg line="${application.args}"/>
+        </java>
+    </target>
+    <target name="debug-single" depends="debug"/>
+    <target name="javadoc" depends="init">
+        <javadoc destdir="${dist.javadoc.dir}" source="${javac.source}" encoding="${source.encoding}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+    <target name="clean" depends="init">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    <target name="default" depends="test,jar"/>
+</project>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Demo_Java_Jeu_de_six" default="default" basedir=".">
+    <description>Application Swing Nimbus, Java 8, sans Maven.</description>
+    <import file="nbproject/build-impl.xml"/>
+</project>
